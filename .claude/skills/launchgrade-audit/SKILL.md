@@ -1,24 +1,24 @@
 ---
-name: everlast-web-audit
-description: Pre-Launch und Post-Launch Audit für Web-Projekte nach Everlast Web Standards 2026. Führt Lighthouse, Mozilla Observatory und PageSpeed Insights aus, parsed JSON-Output, mappt Findings auf MUSTs/SHOULDs aus AGENTS.md, liefert Bucket-Report (Blocker / Empfohlen / Nice-to-have). Triggert bei "Audit", "Pre-Launch", "prüfen", "Lighthouse", "Score", "wie schnell", URL gegeben + Prüfungs-Verb.
+name: launchgrade-audit
+description: Pre-launch and post-launch audit for web projects per Launchgrade Web Standards 2026. Runs Lighthouse, Mozilla Observatory, and PageSpeed Insights, parses JSON output, maps findings to MUSTs/SHOULDs from AGENTS.md, returns a bucket report (Blockers / Recommended / Nice-to-have). Triggers on "audit", "pre-launch", "check", "Lighthouse", "score", "how fast", URL + check verb, "Audit", "prüfen", "wie schnell".
 ---
 
-# Everlast Web Audit Skill
+# Launchgrade Web Audit Skill
 
-Dritte Phase im Everlast-Web-Workflow: **Verifikation**. Führt die drei essentiellen Tools deterministisch aus und mappt die Findings auf die Standards.
+Dritte Phase im Launchgrade-Workflow: **Verifikation**. Führt die drei essentiellen Tools deterministisch aus und mappt die Findings auf die Standards.
 
 ## Wann triggern
 
 - Pre-Launch-Audit einer neuen Site
 - Post-Launch-Health-Check (nach Deployment, nach größerem Release)
-- Migration bestehender Site auf Everlast-Standards: Baseline-Snapshot
+- Migration bestehender Site auf Launchgrade-Standards: Baseline-Snapshot
 - URL ist im Prompt + Wort "Audit" / "prüfen" / "wie schnell" / "Score" / "Lighthouse" / "CWV"
 
-Nicht triggern bei: Code-Reviews ohne URL, reinen Setup-Fragen (→ `everlast-web-setup`), Design-/Brand-Fragen (→ `everlast-web-design`).
+Nicht triggern bei: Code-Reviews ohne URL, reinen Setup-Fragen (→ `launchgrade-setup`), Design-/Brand-Fragen (→ `launchgrade-design`).
 
 ## Wo die Wahrheit liegt
 
-Standards liegen in `./web-standards/AGENTS.md` und `./web-standards/checklist.md` im Repo-Root. Snapshot der Everlast Web Standards 2026, mit jedem Release versioniert.
+Standards liegen in `./web-standards/AGENTS.md` und `./web-standards/checklist.md` im Repo-Root. Snapshot der Launchgrade Web Standards 2026, mit jedem Release versioniert.
 
 Relevante Kapitel für Audit:
 - §2 Performance (Core Web Vitals)
@@ -159,7 +159,7 @@ Wenn keine CrUX-Daten vorliegen (kleiner Traffic / neue Site): nur Lab-Daten aus
 ## Übergabe
 
 - Wenn Audit grün: Site ist **technisch** ready.
-- Design-Qualität bleibt manueller Check via **`everlast-web-design`** (DESIGN.md vs. Output).
+- Design-Qualität bleibt manueller Check via **`launchgrade-design`** (DESIGN.md vs. Output).
 - Bei Bestandsmigration: Mid-/Long-Term-Roadmap aus AGENTS.md §11 als Folge-Plan vorschlagen.
 
 ## Aktualität

@@ -1,19 +1,19 @@
 # Contributing
 
-Schlanke Konventionen für Solo-Repos — kein Enforcement-Layer, kein CI, AI übernimmt Format & Style.
+Lean conventions for solo / small-team repos — no enforcement layer, no CI, AI handles format and style.
 
 ## Branches
 
 - `main` — production
-- `feat/<topic>` — neue Features
-- `fix/<topic>` — Bugfixes
-- `chore/<topic>` — Maintenance
+- `feat/<topic>` — new features
+- `fix/<topic>` — bug fixes
+- `chore/<topic>` — maintenance
 
-Wenn ein Projekt Multi-Contributor wird, **GitHub Branch Protection** auf `main` aktivieren (Settings → Branches → Add rule: require PR, require status checks). Bei Solo-Repos kein Pflicht-Schritt — direct push auf main ist okay.
+If a project grows to multi-contributor, enable **GitHub Branch Protection** on `main` (Settings → Branches → Add rule: require PR, require status checks). For solo repos this is not required — direct push to `main` is fine.
 
 ## Commits
 
-[Conventional Commits](https://www.conventionalcommits.org/) als Empfehlung:
+[Conventional Commits](https://www.conventionalcommits.org/) as a recommendation:
 
 ```
 feat: add cookie consent banner
@@ -24,20 +24,27 @@ chore(deps): bump astro to 5.4
 perf: lazy-load below-fold images
 ```
 
-Kein Hook erzwingt das — nutze es als Konvention, weil CHANGELOG-Generierung und PR-Review davon profitieren.
+No hook enforces this — use it as a convention because changelog generation and PR review benefit from it.
 
 ## Standards
 
-Alle Änderungen müssen die Everlast Web Standards einhalten — `./web-standards/AGENTS.md` (Snapshot) oder Standards-Repo (Source of Truth).
+All changes must respect the Launchgrade Web Standards — `./web-standards/AGENTS.md` (snapshot in this repo).
 
-Bei BFSG-relevanten Projekten zusätzlich `@axe-core/cli` vor Merge auf `main`.
+For BFSG-relevant projects, additionally run `@axe-core/cli` before merging to `main`.
 
-## Git-Settings (einmalig pro Projekt)
+## Issues & Pull Requests
 
-Empfohlen aber optional:
+- Use GitHub Issues for bug reports, feature requests, or to discuss larger changes before opening a PR.
+- Keep PRs focused — one logical change per PR. Multiple unrelated fixes in one PR are harder to review.
+- Reference any related Issue in the PR description.
+- For standards changes (`web-standards/AGENTS.md` or `checklist.md`), add a Changelog entry at the bottom of the file with the date and version bump rationale.
+
+## Git settings (once per project)
+
+Recommended but optional:
 
 ```bash
-git config commit.gpgsign true       # Signierte Commits (wenn GPG eingerichtet)
-git config pull.rebase true          # rebase statt merge auf pull
-git config core.autocrlf input       # LF beibehalten, CRLF auf Input convertieren
+git config commit.gpgsign true       # Signed commits (if GPG is set up)
+git config pull.rebase true          # rebase instead of merge on pull
+git config core.autocrlf input       # Keep LF, convert CRLF on input
 ```

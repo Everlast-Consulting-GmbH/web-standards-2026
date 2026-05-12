@@ -1,8 +1,8 @@
 # AGENTS.md
 
-Constitution für jeden AI-Agenten, der in diesem Projekt arbeitet — Claude Code, Codex, oder andere. Diese Datei und `CLAUDE.md` sind via Symlink **identisch**.
+Constitution for any AI agent working in this project — Claude Code, Codex, or others. This file and `CLAUDE.md` are identical (symlink).
 
-Universelle Web-Pflicht-Standards stehen in `./web-standards/AGENTS.md` (Snapshot der Everlast Web Standards 2026, mit jedem Release versioniert).
+The technical web baseline lives in `./web-standards/AGENTS.md` (snapshot of the Launchgrade Web Standards 2026, versioned per release). That document is intentionally in German because it references German/EU legal frameworks (BFSG, DDG, TDDDG, MStV, EU rulings).
 
 ## Setup
 
@@ -10,99 +10,99 @@ Universelle Web-Pflicht-Standards stehen in `./web-standards/AGENTS.md` (Snapsho
 nvm use && npm install
 ```
 
-Voraussetzungen (einmalig, global):
+Global prerequisites (once):
 
-- Node ≥ 20 (siehe `.nvmrc`)
-- `lighthouse` und `@axe-core/cli` für den Audit-Skill: `npm i -g lighthouse @axe-core/cli`
+- Node ≥ 20 (see `.nvmrc`)
+- `lighthouse` and `@axe-core/cli` for the audit skill: `npm i -g lighthouse @axe-core/cli`
 
-Dann den `everlast-web-setup` Skill in Claude Code / Codex triggern — er fragt Stack, Brand, Domain, BFSG-Relevanz ab, **scaffoldt den gewählten Stack automatisch** (Astro/Next/SvelteKit/Nuxt non-interaktiv) und ersetzt die `{{PLACEHOLDER}}`-Tokens in `public/*` und `SECURITY.md`.
+Then trigger the `launchgrade-setup` skill in Claude Code / Codex — it asks for stack, brand, domain, BFSG relevance, **auto-scaffolds the chosen stack** (Astro/Next/SvelteKit/Nuxt, non-interactive), and replaces the `{{PLACEHOLDER}}` tokens in `public/*` and `SECURITY.md`.
 
-## Workflow (drei Phasen, drei Skills)
+## Workflow (three phases, three skills)
 
 ```
-1. /everlast-web-setup    →  Kontext-Abfrage, Auto-Scaffold, Pflicht-Files + stack-spezifische Configs (CSP, Header, JSON-LD)
-2. /everlast-web-design   →  DESIGN.md, Brand-DNA, Anti-Slop, Visual-Diff-Loop (Playwright MCP)
-3. Bauen
-4. /everlast-web-audit    →  vor jedem Release (Lighthouse + Mozilla Observatory + PageSpeed Insights)
+1. /launchgrade-setup    →  context capture, auto-scaffold, required files + stack-specific configs (CSP, headers, JSON-LD)
+2. /launchgrade-design   →  DESIGN.md, brand DNA, anti-slop, visual-diff loop (Playwright MCP)
+3. Build
+4. /launchgrade-audit    →  before every release (Lighthouse + Mozilla Observatory + PageSpeed Insights)
 ```
 
-## Wann was triggert
+## When does what trigger
 
-- **Neue Seite, robots.txt, CSP, Manifest, security.txt** → `everlast-web-setup`
-- **DESIGN.md, "sieht generisch aus", Brand-Refactor** → `everlast-web-design`
-- **URL gegeben + "prüfen" / "Lighthouse" / "Pre-Launch"** → `everlast-web-audit`
+- **New page, robots.txt, CSP, manifest, security.txt** → `launchgrade-setup`
+- **DESIGN.md, "looks generic", brand refactor** → `launchgrade-design`
+- **URL given + "audit" / "Lighthouse" / "pre-launch"** → `launchgrade-audit`
 
-## Pflicht-Files im Repo (stack-agnostisch)
+## Required files in the repo (stack-agnostic)
 
-Bereits im Template mit `{{PLACEHOLDER}}`-Tokens — der Setup-Skill füllt sie:
+Already in the template with `{{PLACEHOLDER}}` tokens — the setup skill fills them:
 
-- `public/robots.txt` mit AI-Crawler-Defaults (GPTBot, ClaudeBot, Google-Extended, PerplexityBot, Applebot-Extended)
+- `public/robots.txt` with AI-crawler defaults (GPTBot, ClaudeBot, Google-Extended, PerplexityBot, Applebot-Extended)
 - `public/sitemap.xml`
-- `public/llms.txt` für AI-Discoverability
-- `public/.well-known/security.txt` mit `Expires` 12 Monate
+- `public/llms.txt` for AI discoverability
+- `public/.well-known/security.txt` with `Expires` 12 months out
 - `public/site.webmanifest`
 - `public/404.html`, `public/500.html`
 - `SECURITY.md`
 
-Nicht im Template (stack- oder asset-spezifisch, kommt durch Skill oder manuell):
+Not in the template (stack- or asset-specific, comes via skill or manually):
 
-- Favicons (SVG + 192/512/180-PNG) — brand-Asset, pro Projekt
-- CSP/Security-Header (`vercel.json`, `next.config.js`, nginx, Cloudflare)
-- JSON-LD Organization auf Homepage
+- Favicons (SVG + 192/512/180 PNG) — brand asset, per project
+- CSP / security headers (`vercel.json`, `next.config.js`, nginx, Cloudflare)
+- JSON-LD Organization on the homepage
 
-## Build / Test / Audit
+## Build / test / audit
 
 ```bash
-# Stack-spezifisch, wird durch den gewählten Stack ergänzt:
+# Stack-specific, added by the chosen stack:
 npm run dev          # local dev
 npm run build        # production build
-npm test             # falls Tests existieren
+npm test             # if tests exist
 ```
 
-Audit triggert man in Claude Code/Codex direkt via `/everlast-web-audit <URL>`. Kein `npm run audit` — der Skill ist context-aware und braucht keine npm-Mechanik.
+Trigger the audit directly via `/launchgrade-audit <URL>` in Claude Code / Codex. No `npm run audit` — the skill is context-aware and needs no npm wiring.
 
-## Git-Workflow
+## Git workflow
 
 - **Branches**: `feat/<topic>`, `fix/<topic>`, `chore/<topic>`, `docs/<topic>`
-- **Commits**: Conventional Commits als Empfehlung (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `perf:`) — kein Hook erzwingt das, aber CHANGELOG-Generierung + PR-Review profitieren davon
-- **Solo-Repos**: direct push auf `main` ist okay
-- **Multi-Contributor-Repos**: GitHub Branch Protection auf `main` aktivieren (Settings → Branches → Add rule: require PR + status checks)
+- **Commits**: Conventional Commits as a recommendation (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `perf:`) — no hook enforces this, but changelog generation and PR review benefit from it
+- **Solo repos**: direct push to `main` is fine
+- **Multi-contributor repos**: enable GitHub Branch Protection on `main` (Settings → Branches → Add rule: require PR + status checks)
 
-## Code-Standards
+## Code standards
 
-- TypeScript strict mode bevorzugen
-- Frühe Returns statt tiefer Verschachtelung
-- Input-Validierung an System-Grenzen (Zod / TypeBox / valibot)
-- Mindestens Happy Path + 1 Edge Case pro öffentlicher Funktion
-- Keine leeren catch-Blöcke
-- Web-Standards: alle MUSTs aus `./web-standards/AGENTS.md` einhalten
+- Prefer TypeScript strict mode
+- Early returns over deep nesting
+- Input validation at system boundaries (Zod / TypeBox / valibot)
+- At minimum happy path + 1 edge case per public function
+- No empty catch blocks
+- Web standards: honor all MUSTs from `./web-standards/AGENTS.md`
 
-## Sicherheit
+## Security
 
-- Niemals secrets committen — `.env*` ist gitignored
-- Vor Push: `git diff --cached | grep -iE "(api[_-]?key|secret|token|password)"` als Spot-Check
-- Bei BFSG-Relevanz (B2C-Shop, Banking, Buchung): zusätzlich `@axe-core/cli` mit `--tags wcag22aa` vor Merge
+- Never commit secrets — `.env*` is gitignored
+- Before push, spot-check: `git diff --cached | grep -iE "(api[_-]?key|secret|token|password)"`
+- For BFSG-relevant projects (B2C shop, banking, booking): run `@axe-core/cli` with `--tags wcag22aa` before merge
 
-## Standards aktuell halten
+## Keeping standards current
 
-Standards-Updates kommen über das öffentliche Repo (`git pull` oder neuen Template-Klon). Versions-Marker liegt in `web-standards/.snapshot-version`.
+Standards updates come via the public repo (`git pull` or fresh template clone). Version marker lives in `web-standards/.snapshot-version`.
 
-Das interne Maintainer-Script `scripts/update-standards.sh` ist für externe Nutzer nicht relevant.
+The maintainer-only script `scripts/update-standards.sh` is not relevant for external users.
 
-## Antwort-Stil (für AI-Agenten)
+## Response style (for AI agents)
 
-- Auf Deutsch antworten (User-Präferenz), Code / Header / Commits / Werte auf Englisch
-- Knapp, direkt, strukturiert — erst Plan, dann Umsetzung
-- Em-dashes in user-facing Copy sparsam — maximal einer pro längerem Absatz
-- Bei BFSG-Relevanz aktiv darauf hinweisen
-- Bei DSGVO-Verstößen (Google Fonts CDN, hardcoded reCAPTCHA, US-Tools ohne AVV) klar markieren
+- The standards documentation in `web-standards/` is in German. When answering questions about it, respond in the language the user used. Code / headers / commits / tokens stay in English.
+- Concise, direct, structured — plan first, then execute
+- Em-dashes in user-facing copy: use sparingly — maximum one per longer paragraph
+- For BFSG relevance: flag proactively
+- For GDPR violations (Google Fonts CDN, hardcoded reCAPTCHA, US tools without DPA): mark clearly
 
-## Anti-Patterns
+## Anti-patterns
 
-- ❌ Standards aus dem Kopf rezitieren statt `./web-standards/AGENTS.md` zu lesen
-- ❌ Generische `robots.txt` ohne AI-Crawler-Konfiguration
-- ❌ CSP mit `unsafe-inline` ohne dokumentierte Begründung
-- ❌ Google Fonts via `fonts.googleapis.com` einbauen
-- ❌ Mehrere `<h1>` pro Seite
-- ❌ Bilder ohne `width`/`height`-Attribute
-- ❌ `security.txt` ohne `Expires` oder mit `Expires < heute`
+- ❌ Reciting standards from memory instead of reading `./web-standards/AGENTS.md`
+- ❌ Generic `robots.txt` without AI-crawler configuration
+- ❌ CSP with `unsafe-inline` without documented justification
+- ❌ Embedding Google Fonts via `fonts.googleapis.com`
+- ❌ Multiple `<h1>` per page
+- ❌ Images without `width`/`height` attributes
+- ❌ `security.txt` without `Expires` or with `Expires < today`

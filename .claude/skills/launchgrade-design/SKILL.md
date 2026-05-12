@@ -1,11 +1,11 @@
 ---
-name: everlast-web-design
-description: Anti-Slop Design-Layer für Web-Projekte. Generiert einen interaktiven Style-Picker mit 3 Style-Direktionen (HTML mit Cards untereinander, im Browser zur Wahl), schreibt DESIGN.md auf Basis der Wahl, definiert Named Aesthetic References, blockt AI-Default-Patterns (Inter, Lila-Pink-Gradient, Shadcn-Default, Rounded-XL-Bento, generische Lucide-Hero-Icons). Etabliert Visual-Diff-Loop mit dem im Projekt verfügbaren Browser-Tool (agent-browser / Playwright MCP / Chrome MCP). Triggert bei "Design", "Look", "Brand", "DESIGN.md", "Anti-Slop", "nicht generisch", "sieht generisch aus", "Style Guide".
+name: launchgrade-design
+description: Anti-slop design layer for web projects. Generates an interactive style picker (3 directions, HTML cards stacked, browser-selectable), writes DESIGN.md based on the choice, defines named aesthetic references, blocks AI default patterns (Inter, purple-pink gradients, default shadcn, rounded-XL bento, generic Lucide hero icons). Sets up a visual-diff loop with the project's browser tool (agent-browser / Playwright MCP / Chrome MCP). Triggers on "design", "look", "brand", "DESIGN.md", "anti-slop", "not generic", "looks generic", "style guide", "Design", "Anti-Slop", "sieht generisch aus", "Style Guide".
 ---
 
-# Everlast Web Design Skill
+# Launchgrade Web Design Skill
 
-Zweite Phase im Everlast-Web-Workflow: **Build-Layer Anti-Slop**. Adressiert das Hauptproblem 2026 — AI-generierte Sites sehen alle gleich aus.
+Zweite Phase im Launchgrade-Workflow: **Build-Layer Anti-Slop**. Adressiert das Hauptproblem 2026 — AI-generierte Sites sehen alle gleich aus.
 
 ## Wann triggern
 
@@ -16,7 +16,7 @@ Zweite Phase im Everlast-Web-Workflow: **Build-Layer Anti-Slop**. Adressiert das
 - Refactor visueller Layer eines bestehenden Projekts
 - Component-Library-Anbindung (Design-System via MCP statt Prompt-Injection)
 
-Nicht triggern bei: technischen Setup-Fragen (→ `everlast-web-setup`), Audit/Pre-Launch (→ `everlast-web-audit`), rein logischen Code-Fragen.
+Nicht triggern bei: technischen Setup-Fragen (→ `launchgrade-setup`), Audit/Pre-Launch (→ `launchgrade-audit`), rein logischen Code-Fragen.
 
 ## Das Grundproblem
 
@@ -68,7 +68,7 @@ Naive Prompt-Injection einzelner Tokens funktioniert nicht — LLMs ignorieren s
    - Banking / Finance → Editorial Conservative · Pragmatic Trust · Modern Neutral
    - Agentur / Portfolio → Editorial Bold · Industrial Brutalist · Maximalist Color
 
-   **HTML-Mockup schreiben** unter `.everlast/mockups/style-picker.html` — **eine** Datei, **3 Sections gestapelt untereinander**, jede ~700–900 px hoch. Self-contained (alle Styles im `<head>`, keine externen Dependencies, keine Build-Tools).
+   **HTML-Mockup schreiben** unter `.launchgrade/mockups/style-picker.html` — **eine** Datei, **3 Sections gestapelt untereinander**, jede ~700–900 px hoch. Self-contained (alle Styles im `<head>`, keine externen Dependencies, keine Build-Tools).
 
    Pro Section enthalten:
    - **Header**: `Variante A · [Named Aesthetic]`
@@ -80,11 +80,11 @@ Naive Prompt-Injection einzelner Tokens funktioniert nicht — LLMs ignorieren s
    Brand-Name + Tagline aus `project.config.json` lesen, sonst Platzhalter.
 
    **Im Browser öffnen** — Tool-Detection-Reihenfolge:
-   1. `agent-browser open .everlast/mockups/style-picker.html`
+   1. `agent-browser open .launchgrade/mockups/style-picker.html`
    2. `mcp__claude-in-chrome__tabs_create_mcp` mit `file://` URL
    3. Fallback: User-Hinweis mit absolutem Pfad zum manuellen Öffnen
 
-   **`.everlast/` muss in `.gitignore`** stehen — falls fehlt, ergänzen.
+   **`.launchgrade/` muss in `.gitignore`** stehen — falls fehlt, ergänzen.
 
 3. **Auswahl via AskUserQuestion einholen:**
    - Variante A · Variante B · Variante C
@@ -149,7 +149,7 @@ Standards-Lookup: `./web-standards/AGENTS.md` im Repo.
 ## Übergabe
 
 - Wenn DESIGN.md steht und Visual-Loop läuft: Design-Phase abgeschlossen.
-- Vor Release: **`everlast-web-audit`** für technischen Check (Lighthouse + Observatory + PSI).
+- Vor Release: **`launchgrade-audit`** für technischen Check (Lighthouse + Observatory + PSI).
 - Design-Qualität bleibt manueller Check via DESIGN.md vs. Output — kein Tool ersetzt Designer-Auge.
 
 ## Aktualität

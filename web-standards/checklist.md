@@ -1,4 +1,4 @@
-# Everlast Pre-Launch-Checkliste
+# Launchgrade Pre-Launch-Checkliste
 
 **Version 1.5 · Mai 2026**
 
@@ -36,7 +36,7 @@ Kompakte Version der Pflicht-Anforderungen aus [AGENTS.md](./AGENTS.md). Jeder o
 
 - [ ] axe DevTools: 0 Violations
 - [ ] Color Contrast: 4.5:1 Body-Text, 3:1 Large Text / UI / Focus-Indikator
-- [ ] Genau ein sichtbarer `<h1>` pro Seite _(SHOULD / Everlast-Default)_
+- [ ] Genau ein sichtbarer `<h1>` pro Seite _(SHOULD / Launchgrade-Default)_
 - [ ] Headings bilden nachvollziehbare Inhaltsstruktur (keine Sprünge) _(SHOULD)_
 - [ ] Landmarks vorhanden: `<header>`, `<nav>`, `<main>`, `<footer>`
 - [ ] Skip-Link ist erstes fokussierbares Element

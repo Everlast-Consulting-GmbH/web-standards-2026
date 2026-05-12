@@ -1,23 +1,23 @@
 ---
-name: everlast-web-setup
-description: Setup neuer Web-Projekte nach Everlast Web Standards 2026. Generiert Pflicht-Artefakte (HTML-Head, robots.txt mit AI-Crawler-Defaults, sitemap.xml, security.txt, manifest, Favicon-Set, CSP-Config stack-spezifisch, 404/500, llms.txt, Projekt-AGENTS.md). Triggert bei "neue Website", "Setup", "Projekt starten", "Boilerplate", "Pflicht-Files", "neue Landing Page".
+name: launchgrade-setup
+description: Scaffolds new web projects per Launchgrade Web Standards 2026. Generates required artifacts (HTML head, robots.txt with AI-crawler defaults, sitemap.xml, security.txt, manifest, favicon set, stack-specific CSP config, 404/500, llms.txt, project AGENTS.md). Triggers on "new website", "setup", "start project", "boilerplate", "required files", "landing page", "neue Website", "Setup", "Projekt starten", "Pflicht-Files".
 ---
 
-# Everlast Web Setup Skill
+# Launchgrade Web Setup Skill
 
-Erste Phase im Everlast-Web-Workflow: **Foundation**. Generiert die technischen Pflicht-Artefakte aus §1, §5, §9 der AGENTS.md.
+Erste Phase im Launchgrade-Workflow: **Foundation**. Generiert die technischen Pflicht-Artefakte aus §1, §5, §9 der AGENTS.md.
 
 ## Wann triggern
 
 - Neues Web-Projekt: Marketing-Site, Shop, Buchung, SaaS-Marketing-Frontend, Landing Page
-- Migration eines Bestandsprojekts auf Everlast-Standards (Initialphase)
+- Migration eines Bestandsprojekts auf Launchgrade-Standards (Initialphase)
 - Konkrete Setup-Fragen: CSP, robots.txt für AI-Bots, Manifest, Favicons, security.txt, hreflang
 
-Nicht triggern bei: Backend-/Admin-Tasks, internem Tooling, ML-Pipelines, reinen Design-/Brand-Fragen (→ `everlast-web-design`), Audit/Pre-Launch-Check (→ `everlast-web-audit`).
+Nicht triggern bei: Backend-/Admin-Tasks, internem Tooling, ML-Pipelines, reinen Design-/Brand-Fragen (→ `launchgrade-design`), Audit/Pre-Launch-Check (→ `launchgrade-audit`).
 
 ## Wo die Wahrheit liegt
 
-Standards liegen in `./web-standards/AGENTS.md` und `./web-standards/checklist.md` im Repo-Root. Snapshot der Everlast Web Standards 2026, mit jedem Release versioniert.
+Standards liegen in `./web-standards/AGENTS.md` und `./web-standards/checklist.md` im Repo-Root. Snapshot der Launchgrade Web Standards 2026, mit jedem Release versioniert.
 
 Relevante Kapitel für Setup:
 - §1 HTML & Document Baseline
@@ -44,7 +44,7 @@ Relevante Kapitel für Setup:
 
    **Faustregel:** Bei Unsicherheit → **Astro** (Default). Bei "viele Forms / Auth / Dashboards" → **Next.js**. Bei "Single Landing-Page" → **Plain HTML**.
 
-   **Domain** — Final-URL (z.B. `everlast.ai`).
+   **Domain** — Final-URL (z.B. `example.com`).
 
    **Sprache(n)** — Default `de`, bei i18n auch `hreflang`-Schema (z.B. `de,en`).
 
@@ -105,7 +105,7 @@ Relevante Kapitel für Setup:
    - JSON-LD Organization + WebSite auf Homepage, BreadcrumbList Template
    - Favicon-Set (SVG + 32/180/512 PNG) — RealFaviconGenerator-Hinweis bei Bedarf
    - `/404.html` und `/500.html` Templates mit Branding
-   - **Projekt-eigene `AGENTS.md`** im Repo-Root mit: Setup, Build, Test, Conventions, Deploy, Verweis auf Everlast-Web-Standards-Repo
+   - **Projekt-eigene `AGENTS.md`** im Repo-Root mit: Setup, Build, Test, Conventions, Deploy, Verweis auf Launchgrade-Standards-Repo
    - Bei BFSG-Relevanz: `accessibility-statement.md` Template + Hinweis auf Pflicht (ab Juni 2025)
 
    **Default-Welcome-Page ersetzen:** Der Scaffold legt eine Framework-Welcome-Page ab (`src/pages/index.astro`, `app/page.tsx`, `src/routes/+page.svelte`, `app.vue`). Ersetze sie durch einen **minimalen Placeholder** — kein Marketing-Text, keine Sections, keine Designs:
@@ -113,10 +113,10 @@ Relevante Kapitel für Setup:
    ```
    <h1>{{BRAND_NAME}}</h1>
    <p>{{BRAND_TAGLINE}}</p>
-   <p><small>Setup abgeschlossen. Inhalt und Design folgen mit /everlast-web-design.</small></p>
+   <p><small>Setup abgeschlossen. Inhalt und Design folgen mit /launchgrade-design.</small></p>
    ```
 
-   Begründung: solange Default-Content steht, ist die Versuchung groß "drauf aufzubauen" und damit Brand-DNA aus dem Skill `everlast-web-design` zu umgehen. Saubere Übergabe = klarer Stopppunkt.
+   Begründung: solange Default-Content steht, ist die Versuchung groß "drauf aufzubauen" und damit Brand-DNA aus dem Skill `launchgrade-design` zu umgehen. Saubere Übergabe = klarer Stopppunkt.
 
 5. **Smoke-Test im Browser (Foundation-Verifikation, kein Visual-Diff):**
 
@@ -166,14 +166,14 @@ Relevante Kapitel für Setup:
 
    Bei Fail: Skill bricht **nicht** ab — Foundation steht, der konkrete Fehler kommt in den Output als Aufgabe für den User / nächste Phase.
 
-6. **Übersicht ausgeben:** kurze Liste "Was wurde gesetzt" mit Pfaden + Scaffold-Status (frisch initialisiert / bereits vorhanden / Plain HTML) + Smoke-Test-Ergebnis + expliziter Hinweis "Content + Visual Design folgen — bitte `/everlast-web-design` aufrufen, nicht selbst Hero/Sections schreiben".
+6. **Übersicht ausgeben:** kurze Liste "Was wurde gesetzt" mit Pfaden + Scaffold-Status (frisch initialisiert / bereits vorhanden / Plain HTML) + Smoke-Test-Ergebnis + expliziter Hinweis "Content + Visual Design folgen — bitte `/launchgrade-design` aufrufen, nicht selbst Hero/Sections schreiben".
 
 ## Verhalten
 
 - AGENTS.md immer lesen vor Generierung — nie aus dem Kopf.
 - Stack-spezifisch — frag bei Unklarheit. Headers, Manifest, CSP unterscheiden sich zwischen Vercel / Cloudflare Pages / Cloudflare Workers / nginx / Apache. Bei Astro & Next standardmäßig Vercel-Deploy annehmen, sonst nachfragen.
 - Nur Pflicht-Artefakte. Optionales (Service Worker, View Transitions, Speculation Rules) erst nach Nachfrage.
-- **Setup ist Foundation, kein Content.** Erlaubt: scaffold, Pflicht-Files in `public/`, `<head>`-Metas, Manifest, Favicons, minimaler Placeholder-Index mit Brand-Name + Tagline. Verboten: Hero-Sections, Marketing-Copy, konkrete Section-Inhalte, Layouts mit Brand-Farbschema / Fonts, globale Styles über `theme-color` hinaus. Content + Visual-Design → `everlast-web-design`.
+- **Setup ist Foundation, kein Content.** Erlaubt: scaffold, Pflicht-Files in `public/`, `<head>`-Metas, Manifest, Favicons, minimaler Placeholder-Index mit Brand-Name + Tagline. Verboten: Hero-Sections, Marketing-Copy, konkrete Section-Inhalte, Layouts mit Brand-Farbschema / Fonts, globale Styles über `theme-color` hinaus. Content + Visual-Design → `launchgrade-design`.
 - Auf Deutsch antworten, Code/Header/Werte/Tokens auf Englisch.
 - Em-dashes in user-facing Copy sparsam.
 - Bei BFSG-Relevanz aktiv darauf hinweisen (B2C-Shop / Banking / Buchung).
@@ -182,7 +182,7 @@ Relevante Kapitel für Setup:
 ## Anti-Patterns
 
 - ❌ Standards aus dem Kopf rezitieren statt AGENTS.md zu lesen.
-- ❌ Hero-Sections, Marketing-Copy oder konkrete Section-Inhalte in `src/pages/`, `app/`, `src/routes/` schreiben — gehört zu `everlast-web-design`.
+- ❌ Hero-Sections, Marketing-Copy oder konkrete Section-Inhalte in `src/pages/`, `app/`, `src/routes/` schreiben — gehört zu `launchgrade-design`.
 - ❌ Layouts oder globale Styles mit Brand-Farben / Fonts / Komponenten anlegen — `theme-color` im Manifest ist die einzige Brand-Farb-Berührung im Setup.
 - ❌ Default-Welcome-Page des Scaffolds "verbessern" statt durch sauberen Placeholder zu ersetzen.
 - ❌ Generische `robots.txt` ohne AI-Crawler-Konfiguration.
@@ -196,8 +196,8 @@ Relevante Kapitel für Setup:
 
 ## Übergabe an nächste Phase
 
-- **`everlast-web-design`** für Brand-DNA, DESIGN.md, Anti-Slop-Setup.
-- **`everlast-web-audit`** vor jedem Release (Lighthouse + Mozilla Observatory + PageSpeed Insights).
+- **`launchgrade-design`** für Brand-DNA, DESIGN.md, Anti-Slop-Setup.
+- **`launchgrade-audit`** vor jedem Release (Lighthouse + Mozilla Observatory + PageSpeed Insights).
 
 ## Aktualität
 

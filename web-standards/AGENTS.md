@@ -1,6 +1,6 @@
-# Everlast Web Standards 2026
+# Launchgrade Web Standards 2026
 
-**Stand:** Mai 2026 · **Version:** 1.5 · **Geltung:** Pflicht-Baseline für jede von Everlast gebaute oder betreute Website.
+**Stand:** Mai 2026 · **Version:** 1.5 · **Geltung:** Pflicht-Baseline für jede von Launchgrade gebaute oder betreute Website.
 
 Dieses Dokument definiert die technischen Mindestanforderungen, die für **jede** öffentliche Website gelten, unabhängig von Stack, CMS oder Framework. Es enthält **keine** Design-Entscheidungen — nur messbare, prüfbare Fakten.
 
@@ -9,7 +9,7 @@ Das Dokument ist gleichzeitig:
 - **Briefing** für Entwickler:innen vor Projektstart
 - **AGENTS.md** für Coding-Agents (Claude Code, Codex, Cursor, etc.)
 - **Audit-Vorlage** für Pre-Launch und für die Migration bestehender Projekte
-- **Vertragsanhang** für Kundenangebote ("Konformität mit Everlast Web Standards 2026")
+- **Vertragsanhang** für Kundenangebote ("Konformität mit Launchgrade Web Standards 2026")
 
 ---
 
@@ -19,7 +19,7 @@ Vier Härtegrade nach RFC 2119:
 
 - **MUST** = Launch-Blocker, ohne Diskussion erfüllen.
 - **Conditional MUST** = MUST, sobald das Projekt eine bestimmte Funktion oder rechtliche Anwendung hat (z.B. Shop, Login, Buchung, Mehrsprachigkeit, PWA, Ads, B2C-BFSG).
-- **SHOULD** = Everlast-Default. Abweichung erlaubt, aber im Projekt-README kurz begründen.
+- **SHOULD** = Launchgrade-Default. Abweichung erlaubt, aber im Projekt-README kurz begründen.
 - **MAY** = Optional, ohne Launch-Blocker-Status.
 
 Verbindliche Pre-Launch-Liste: [`checklist.md`](./checklist.md).
@@ -71,7 +71,7 @@ Standard-Skeleton: Skip-Link → `<header>` → `<nav aria-label="...">` → `<m
 - Skip-Link als erstes fokussierbares Element, sichtbar bei `:focus`.
 - Headings bilden eine nachvollziehbare Inhaltsstruktur, nicht rein visuell eingesetzt.
 
-**SHOULD (Everlast-Default):**
+**SHOULD (Launchgrade-Default):**
 - Genau ein sichtbarer `<h1>` pro Seite. Abweichungen nur dokumentiert begründen.
 - Keine Heading-Level-Sprünge (h1 → h2 → h3).
 
@@ -208,7 +208,7 @@ Projektabhängig, kein Baseline-Standard. **Speculation Rules** (`<script type="
 
 ### 3.1 Rechtsrahmen 2026 (MUST verstehen)
 
-- **Everlast-technische Baseline: WCAG 2.2 AA** (W3C Recommendation seit Okt 2023). Rechtliche Zielnormen können je nach Projekt EN 301 549, BFSG, BITV oder vertragliche Anforderungen sein — EN 301 549 v3.2.1 referenziert aktuell noch WCAG 2.1 AA, das Update auf 2.2 folgt im EU-Amtsblatt.
+- **Launchgrade-technische Baseline: WCAG 2.2 AA** (W3C Recommendation seit Okt 2023). Rechtliche Zielnormen können je nach Projekt EN 301 549, BFSG, BITV oder vertragliche Anforderungen sein — EN 301 549 v3.2.1 referenziert aktuell noch WCAG 2.1 AA, das Update auf 2.2 folgt im EU-Amtsblatt.
 - **European Accessibility Act (EAA)** ist seit **28. Juni 2025** verpflichtend für B2C: E-Commerce, Banking, Personenverkehr, E-Books, Telekommunikation, Streaming.
 - **BFSG (DE)** setzt EAA um, in Kraft seit 28. Juni 2025 — Pflicht für jeden B2C-Online-Shop / Banking / Buchung / E-Book / Streaming / Telekommunikation. Bußgelder gestaffelt nach § 37 BFSG: bis **10.000 €** für die meisten OWi-Tatbestände, bis **100.000 €** für schwere Verstöße (z.B. Inverkehrbringen trotz Untersagung).
 - **Kleinstunternehmer-Ausnahme** (§ 3 Abs. 3 BFSG): Unternehmen mit **< 10 Mitarbeitenden UND < 2 Mio. € Jahresumsatz / Bilanzsumme** sind bei Dienstleistungen ausgenommen (für Produkte gilt die Ausnahme nicht). Bei Kundenprojekten zu Beginn prüfen.
@@ -243,7 +243,7 @@ WCAG 2.2 enthält **9 neue Success Criteria** und entfernt SC **4.1.1 Parsing** 
 | 3.3.8 | Accessible Authentication (Minimum) | **AA** | Keine kognitiven Tests (Captcha-Puzzle, Passwort merken) als einzige Auth-Option |
 | 3.3.9 | Accessible Authentication (Enhanced) | AAA | Auch keine Objekterkennung |
 
-Für die Everlast-Baseline (AA) sind alle SCs mit Level A und AA Pflicht: 2.4.11, 2.5.7, 2.5.8, 3.2.6, 3.3.7, 3.3.8.
+Für die Launchgrade-Baseline (AA) sind alle SCs mit Level A und AA Pflicht: 2.4.11, 2.5.7, 2.5.8, 3.2.6, 3.3.7, 3.3.8.
 
 ### 3.4 Color Contrast (MUST)
 
@@ -347,7 +347,7 @@ X (vormals Twitter) liest weiterhin die `twitter:*` Meta-Tags — die Spec wurde
 
 ### 4.4 Structured Data — JSON-LD (MUST)
 
-Everlast-Default: JSON-LD. Google empfiehlt JSON-LD, akzeptiert aber weiterhin Microdata/RDFa. Bei neuen Projekten kein Microdata/RDFa neu einführen, außer Legacy-CMS-Gründe sprechen explizit dafür.
+Launchgrade-Default: JSON-LD. Google empfiehlt JSON-LD, akzeptiert aber weiterhin Microdata/RDFa. Bei neuen Projekten kein Microdata/RDFa neu einführen, außer Legacy-CMS-Gründe sprechen explizit dafür.
 
 **Pflicht-Schemas pro Seite:**
 
@@ -490,7 +490,7 @@ Technische Hebel (keine Content-Vorschriften):
 ### 4.9 URL-Struktur (MUST)
 
 - HTTPS-only, HTTP → 301 → HTTPS.
-- Konsistente Trailing-Slash-Politik. **Empfehlung Everlast-Default**: Trailing-Slash für Directory-Routes (`/leistungen/`), kein Trailing-Slash für File-Routes (`/sitemap.xml`). Konsistent mit Vercel / Next / Astro / WordPress-Default. Die andere Variante 301-redirected.
+- Konsistente Trailing-Slash-Politik. **Empfehlung Launchgrade-Default**: Trailing-Slash für Directory-Routes (`/leistungen/`), kein Trailing-Slash für File-Routes (`/sitemap.xml`). Konsistent mit Vercel / Next / Astro / WordPress-Default. Die andere Variante 301-redirected.
 - Lowercase, Bindestriche statt Underscores, keine Query-Strings in Canonicals.
 - 404 → echter 404-Status, kein Soft-404.
 
@@ -962,11 +962,11 @@ Verbindliche, druckbare Pre-Launch-Liste: siehe **[`checklist.md`](./checklist.m
 
 Vorgehen für die Migration einer Bestands-Site auf diese Standards. Die drei Phasen sind als Claude Code Skills im Repo unter `.claude/skills/` umgesetzt:
 
-- **`everlast-web-setup`** — Pflicht-Artefakte und Foundation (§1, §5, §7, §8, §10)
-- **`everlast-web-design`** — Brand-DNA, DESIGN.md, Anti-Slop, Visual-Diff-Loop, Motion-Tokens (§9.1/9.2)
-- **`everlast-web-audit`** — Pre-/Post-Launch-Check (Lighthouse + Mozilla Observatory + PageSpeed Insights, JSON-Output gegen die Schwellen unten)
+- **`launchgrade-setup`** — Pflicht-Artefakte und Foundation (§1, §5, §7, §8, §10)
+- **`launchgrade-design`** — Brand-DNA, DESIGN.md, Anti-Slop, Visual-Diff-Loop, Motion-Tokens (§9.1/9.2)
+- **`launchgrade-audit`** — Pre-/Post-Launch-Check (Lighthouse + Mozilla Observatory + PageSpeed Insights, JSON-Output gegen die Schwellen unten)
 
-1. **Baseline-Snapshot:** `everlast-web-audit` Skill triggern (führt Lighthouse, Mozilla Observatory, PageSpeed Insights aus, mappt Findings auf MUSTs). Bei BFSG-relevanten Sites zusätzlich `@axe-core/cli` mit `--tags wcag22aa`.
+1. **Baseline-Snapshot:** `launchgrade-audit` Skill triggern (führt Lighthouse, Mozilla Observatory, PageSpeed Insights aus, mappt Findings auf MUSTs). Bei BFSG-relevanten Sites zusätzlich `@axe-core/cli` mit `--tags wcag22aa`.
 2. **Quick-Wins (1–2 Tage):**
    - Security-Header-Baseline + HSTS einziehen.
    - `/.well-known/security.txt` anlegen.
@@ -990,7 +990,7 @@ Vorgehen für die Migration einer Bestands-Site auf diese Standards. Die drei Ph
 
 ## 13. Tools-Referenz
 
-**Drei Tools sind agent-automatisiert** und werden vom `everlast-web-audit` Skill direkt per CLI/curl ausgeführt (JSON-Output):
+**Drei Tools sind agent-automatisiert** und werden vom `launchgrade-audit` Skill direkt per CLI/curl ausgeführt (JSON-Output):
 - `lighthouse <url> --output=json` — Performance, SEO, A11y, Best Practices
 - `curl observatory-api.mdn.mozilla.net/api/v2/scan?host=<host>` — Security-Header
 - `curl googleapis.com/pagespeedonline/v5/runPagespeed?url=<url>` — CrUX-Felddaten + Lab

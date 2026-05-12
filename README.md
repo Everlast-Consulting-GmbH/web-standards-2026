@@ -1,74 +1,76 @@
-# Web Standards 2026
+# Launchgrade — Web Standards 2026
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Stack-agnostisches Starter-Template + technische Pflicht-Baseline für moderne Web-Projekte (Stand 2026). Maintained von [Everlast Consulting GmbH](https://everlast.ai).
+Stack-agnostic starter template + technical baseline for modern web projects (2026 edition). Compliance-grade defaults for EU markets (BFSG / GDPR / TDDDG), Core Web Vitals, security headers, AI-crawler policy, and anti-slop design hygiene. Operationalized as three Claude Code skills.
 
-Was drin ist:
+> The standards documentation in `web-standards/` is intentionally in German — it cites German/EU legal frameworks (BFSG, DDG, TDDDG, MStV, ECJ rulings) where translation would lose legal precision. Tech terms (WCAG, CWV, CSP, JSON-LD) are English throughout, so most of the document is readable without German.
 
-- **Everlast Web Standards 2026** (`web-standards/AGENTS.md` + `checklist.md`) — versionierte Baseline für Performance (Core Web Vitals 2026), Accessibility (WCAG 2.2 AA + BFSG), SEO (klassisch + AI-Crawler), Security (CSP, Header), Privacy (DSGVO/TDDDG), Motion, PWA. Mit RFC-2119-Härtegraden (MUST / Conditional MUST / SHOULD / MAY).
-- **Drei Claude-Code-Skills** (`.claude/skills/`) — Workflow Foundation → Design → Audit:
-  - `everlast-web-setup` — Pflicht-Artefakte scaffolden (robots.txt mit AI-Crawler-Defaults, security.txt, CSP, JSON-LD, Favicon-Set, Manifest, 404/500)
-  - `everlast-web-design` — Anti-Slop Design-Layer, DESIGN.md, Named Aesthetics, Visual-Diff-Loop
-  - `everlast-web-audit` — Pre-/Post-Launch via Lighthouse + Mozilla Observatory + PageSpeed Insights
-- **Pflicht-Files** in `public/` mit `{{PLACEHOLDER}}`-Tokens (robots.txt, sitemap.xml, llms.txt, security.txt, site.webmanifest, 404/500)
-- **Claude Code Settings** (`.claude/settings.json`) — Permissions-Allowlist für die Audit-Tools, Deny-Regeln gegen Force-Push und Publish
-- **Dev-Defaults**: `.gitignore`, `.nvmrc` (Node 20+)
+## What's inside
 
-## Nutzung
+- **Launchgrade Web Standards 2026** (`web-standards/AGENTS.md` + `checklist.md`) — versioned baseline covering Performance (Core Web Vitals 2026), Accessibility (WCAG 2.2 AA + BFSG), SEO (classic + AI-crawler era), Security (CSP, headers, cookies, auth), Privacy (GDPR / TDDDG), Motion, PWA. RFC-2119 levels (MUST / Conditional MUST / SHOULD / MAY).
+- **Three Claude Code skills** (`.claude/skills/`) — Foundation → Design → Audit:
+  - `launchgrade-setup` — scaffolds required artifacts (robots.txt with AI-crawler defaults, security.txt, CSP, JSON-LD, favicon set, manifest, 404/500)
+  - `launchgrade-design` — anti-slop design layer, DESIGN.md, named aesthetics, visual-diff loop
+  - `launchgrade-audit` — pre-/post-launch via Lighthouse + Mozilla Observatory + PageSpeed Insights
+- **Required files** in `public/` with `{{PLACEHOLDER}}` tokens (robots.txt, sitemap.xml, llms.txt, security.txt, site.webmanifest, 404/500)
+- **Claude Code settings** (`.claude/settings.json`) — permission allowlist for audit tooling, deny rules against force push and publish
+- **Dev defaults**: `.gitignore`, `.nvmrc` (Node 20+)
+
+## Usage
 
 ```bash
-# Template klonen
-git clone https://github.com/Everlast-Consulting-GmbH/web-standards-2026.git meine-neue-site
-cd meine-neue-site
+# Clone the template
+git clone https://github.com/petekass/web-standards-2026.git my-new-site
+cd my-new-site
 rm -rf .git && git init
 
-# Dependencies (für lokales Tooling, falls vorhanden)
+# Dependencies (for local tooling, if any)
 nvm use && npm install
 
-# Audit-CLIs einmalig global
+# Audit CLIs (global, once)
 npm install -g lighthouse @axe-core/cli
 ```
 
-Dann in Claude Code: `/everlast-web-setup` triggern. Der Skill fragt Stack, Brand, Domain, BFSG-Relevanz ab und füllt die Platzhalter.
+Then trigger `/launchgrade-setup` in Claude Code. The skill asks for stack, brand, domain, BFSG relevance, and fills the placeholders.
 
 ## Workflow
 
 ```
-1. /everlast-web-setup    →  Placeholder füllen, Stack scaffolden, Pflicht-Files + Configs (CSP, Header, JSON-LD)
-2. /everlast-web-design   →  DESIGN.md, Brand-DNA, Anti-Slop
-3. Bauen
-4. /everlast-web-audit    →  Pre-Launch (Lighthouse + Observatory + PSI), Findings als Blocker/Empfohlen/Nice-to-have
+1. /launchgrade-setup    →  fill placeholders, scaffold stack, required files + configs (CSP, headers, JSON-LD)
+2. /launchgrade-design   →  DESIGN.md, brand DNA, anti-slop
+3. Build
+4. /launchgrade-audit    →  pre-launch (Lighthouse + Observatory + PSI), findings as Blockers / Recommended / Nice-to-have
 ```
 
-## Standards einsehen
+## Reading the standards directly
 
-- **[`web-standards/AGENTS.md`](web-standards/AGENTS.md)** — die vollständigen Standards mit §-Struktur und Pass-Schwellen
-- **[`web-standards/checklist.md`](web-standards/checklist.md)** — kompakte Pre-Launch-Checkliste zum Abhaken
+- **[`web-standards/AGENTS.md`](web-standards/AGENTS.md)** — full standards with §-structure and pass thresholds
+- **[`web-standards/checklist.md`](web-standards/checklist.md)** — compact pre-launch checklist
 
-Diese Dateien sind self-contained — du brauchst weder das Template noch die Skills zu nutzen, um die Standards als Referenz heranzuziehen. Auch verwendbar als Vertragsanhang ("Konformität mit Everlast Web Standards 2026").
+These files are self-contained — you don't need the template or the skills to use them as a reference. Also usable as a contract appendix ("Conformance to Launchgrade Web Standards 2026").
 
-## Was NICHT im Template ist
+## What's NOT in the template
 
-- Framework-spezifischer Code (Next.js, Astro, SvelteKit) — der Setup-Skill scaffoldet den gewählten Stack
-- DESIGN.md — pro Projekt individuell via `everlast-web-design`
-- Favicons als PNG/ICO — Brand-Asset, pro Projekt
-- CI/CD-Setup — bewusst weggelassen für Solo-/Small-Team-Repos
+- Framework-specific code (Next.js, Astro, SvelteKit) — the setup skill scaffolds the chosen stack
+- DESIGN.md — per project via `launchgrade-design`
+- Favicons as PNG/ICO — brand asset, per project
+- CI/CD setup — intentionally omitted for solo / small-team repos
 
-## Stack-Entscheidung
+## Stack choice
 
-Siehe [`docs/STACK_CHOICE.md`](docs/STACK_CHOICE.md) — Entscheidungsmatrix für Marketing-Site / Blog / Shop / SaaS-Marketing.
+See [`docs/STACK_CHOICE.md`](docs/STACK_CHOICE.md) — decision matrix for marketing site / blog / shop / SaaS marketing.
 
-## Beitragen
+## Contributing
 
-Issues und Pull Requests sind willkommen. Größere Änderungen bitte vorher als Issue diskutieren. Siehe [`CONTRIBUTING.md`](CONTRIBUTING.md) für Branch-Konventionen und Commit-Style.
+Issues and pull requests welcome. For larger changes, please open an issue first. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for branch conventions and commit style.
 
 ## Maintenance
 
-Best-effort Maintenance durch Everlast Consulting GmbH. Keine SLA, keine Garantien — siehe [`LICENSE`](LICENSE). Standards-Updates folgen dem Changelog in `web-standards/AGENTS.md`.
+Best-effort maintenance. No SLA, no warranty — see [`LICENSE`](LICENSE). Standards updates follow the changelog in `web-standards/AGENTS.md`.
 
-> Das Script `scripts/update-standards.sh` ist ein Maintainer-Tool zum Syncen aus einem zentralen Standards-Quellrepo und für externe Nutzer nicht relevant — der Snapshot in `web-standards/` ist bereits self-contained.
+> The script `scripts/update-standards.sh` is a maintainer-only tool for syncing from a private standards source repo and is not relevant for external users — the snapshot in `web-standards/` is already self-contained.
 
-## Lizenz
+## License
 
 [MIT](LICENSE) © Everlast Consulting GmbH
