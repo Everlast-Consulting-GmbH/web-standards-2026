@@ -1,0 +1,51 @@
+# Standard Crawler — alles erlaubt
+User-agent: *
+Allow: /
+
+# AI Training Crawler (Opt-Out per Default — bei explizitem Opt-In durch
+# Kunden auf "Allow: /" umstellen)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# AI Search Crawler (Allow — sonst keine Sichtbarkeit in AI Overviews,
+# Perplexity Answers, ChatGPT Search, Claude Search)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://{{DOMAIN}}/sitemap.xml

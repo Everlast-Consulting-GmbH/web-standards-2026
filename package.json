@@ -1,0 +1,33 @@
+{
+  "name": "web-standards-2026",
+  "version": "1.5.0",
+  "private": true,
+  "description": "Stack-agnostisches Starter-Template + technische Pflicht-Baseline für moderne Web-Projekte (Everlast Web Standards 2026).",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "update-standards": "bash scripts/update-standards.sh"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Everlast-Consulting-GmbH/web-standards-2026.git"
+  },
+  "author": "Everlast Consulting GmbH",
+  "keywords": [
+    "web-standards",
+    "template",
+    "claude-code",
+    "accessibility",
+    "wcag",
+    "bfsg",
+    "core-web-vitals",
+    "security-headers",
+    "csp",
+    "dsgvo",
+    "performance",
+    "seo"
+  ]
+}

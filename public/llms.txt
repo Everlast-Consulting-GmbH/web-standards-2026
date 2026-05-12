@@ -1,0 +1,20 @@
+# {{BRAND_NAME}}
+
+> {{BRAND_TAGLINE}}
+
+Diese Datei beschreibt die Struktur und den Inhalt von {{DOMAIN}} für AI-Crawler
+und LLMs. Spec: https://llmstxt.org
+
+## Seiten
+
+- [Startseite](https://{{DOMAIN}}/)
+- [Über uns](https://{{DOMAIN}}/about)
+- [Kontakt](https://{{DOMAIN}}/kontakt)
+- [Impressum](https://{{DOMAIN}}/impressum)
+- [Datenschutz](https://{{DOMAIN}}/datenschutz)
+
+## Über
+
+{{BRAND_NAME}} — {{BRAND_TAGLINE}}
+
+Kontakt: {{CONTACT_EMAIL}}

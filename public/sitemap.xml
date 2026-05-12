@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Minimal-Sitemap. Erweitern pro Route oder durch Stack-Generator
+     ersetzen (Astro: @astrojs/sitemap, Next.js: next-sitemap). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://{{DOMAIN}}/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
