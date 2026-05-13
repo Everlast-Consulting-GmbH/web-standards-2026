@@ -21,7 +21,7 @@ Stack-agnostic starter template + technical baseline for modern web projects (20
 
 ```bash
 # Clone the template
-git clone https://github.com/petekass/web-standards-2026.git my-new-site
+git clone https://github.com/Everlast-Consulting-GmbH/web-standards-2026.git my-new-site
 cd my-new-site
 rm -rf .git && git init
 
