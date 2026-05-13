@@ -27,7 +27,7 @@ When invoked in a fresh template clone (or after the user clicks GitHub's "Use t
 
 ```
 1. /launchgrade-setup    →  context capture, optional stack scaffold, required files + stack-specific configs (CSP, headers, JSON-LD)
-2. /launchgrade-design   →  DESIGN.md, brand DNA, anti-slop, visual-diff loop (Playwright MCP)
+2. /launchgrade-design   →  reference accumulation loop, DESIGN.md + COPY.md, brand DNA, anti-slop, live HTML preview, user approval gate, visual-diff loop
 3. Build
 4. /launchgrade-audit    →  before every release (PageSpeed Insights + Mozilla Observatory; Lighthouse CLI optional)
 ```
@@ -35,7 +35,7 @@ When invoked in a fresh template clone (or after the user clicks GitHub's "Use t
 ## When does what trigger
 
 - **New page, robots.txt, CSP, manifest, security.txt** → `launchgrade-setup`
-- **DESIGN.md, "looks generic", brand refactor** → `launchgrade-design`
+- **DESIGN.md, COPY.md, "looks generic", brand refactor, website copy** → `launchgrade-design`
 - **URL given + "audit" / "Lighthouse" / "pre-launch"** → `launchgrade-audit`
 
 ## Required files in the repo (stack-agnostic)
