@@ -38,16 +38,17 @@ Naive Prompt-Injection einzelner Tokens funktioniert nicht — LLMs ignorieren s
 
    Design-Input ist eine **eigene Entscheidung**, nicht aus Setup-Antworten ableitbar. Wenn der User in der Setup-Phase *"mach du"* / *"entscheide du"* gesagt hat, bezog sich das auf **technische Defaults** (Stack, npm, App-Router). Das ist **nicht** automatisch eine Design-Vollmacht — bevor Phase 2 startet, einmal aktiv beim User nachfragen.
 
-   **Drei Eingabe-Pfade — der User wählt:**
+   **Drei Eingabe-Pfade — Wahl per `AskUserQuestion` einholen. PFLICHT, nicht als Chat-Text aufzählen und auf Antwort warten. Question: *"Wie möchtest du den Design-Input geben?"*, Options: *Pfad A · Visuelle Referenzen* / *Pfad B · entscheide du* / *Pfad C · Hybrid*.**
 
-   **Pfad A · Visuelle Referenzen (bevorzugt, beste Ergebnisse):**
-   - **Bilder lokal hochladen** (Logo, Moodboard, Screenshot von Reference-Sites, Figma-Export als `.png/.jpg/.webp/.svg`). Lade jedes Bild mit `Read` (multimodal), beschreibe was du siehst (Typo-Charakter, Farb-Stimmung, Layout-Prinzip, Spacing-Gefühl), spiegle das Verständnis zurück bevor du weitergehst.
-   - **URLs**: 2–3 Reference-Sites die der Kunde liebt. `WebFetch` mit klarem Prompt nach Typo / Farbe / Layout-Prinzipien. Pinterest-Boards, Dribbble-Shots, Awwwards-Profile ebenfalls zulässig.
-   - **Figma-Datei**: via Figma MCP wenn verfügbar (`mcp__figma__*`), sonst Export-Bild als Bild-Upload behandeln.
+   **Pfad A · Visuelle Referenzen (bevorzugt, beste Ergebnisse):** Der User liefert eine Mischung aus:
+   - **2–3 Reference-Website-URLs**, die der Kunde liebt. `WebFetch` mit klarem Prompt nach Typo / Farbe / Layout-Prinzipien. Pinterest-Boards, Dribbble-Shots, Awwwards-Profile ebenfalls zulässig.
+   - **Bilder oder Screenshots von Reference-Sites** lokal hochgeladen (zusätzlich Logo, Moodboard als `.png/.jpg/.webp/.svg`). Lade jedes Bild mit `Read` (multimodal), beschreibe was du siehst (Typo-Charakter, Farb-Stimmung, Layout-Prinzip, Spacing-Gefühl), spiegle das Verständnis zurück bevor du weitergehst.
+
+   Frage explizit nach mindestens einem dieser Inputs. Nicht "ich brauche Figma" — Links und Screenshots reichen.
 
    **Pfad B · User sagt explizit *"entscheide du das Design"*:** Heuristik aus Phase 2 läuft mit Branche/Tonalität als einzigem Input. Skill bestätigt einmal kurz *"Okay, ich schlage 3 Direktionen vor — keine Referenzen, nur Heuristik nach Branche."* bevor er die Style-Picker-HTML schreibt. Output ist tendenziell generischer, der User akzeptiert das.
 
-   **Pfad C · Hybrid:** Eine grobe Richtung in Worten (*"sollte editorial wirken, nicht zu Tech-mäßig"*) + 1 Referenz. Reicht oft für brauchbaren Style-Picker.
+   **Pfad C · Hybrid:** Eine grobe Richtung in Worten (*"sollte editorial wirken, nicht zu Tech-mäßig"*) + 1 Referenz (URL oder Screenshot). Reicht oft für brauchbaren Style-Picker.
 
    **Immer abgefragt — unabhängig vom Pfad:**
    - **Brand-Name + USP in einem Satz** (sofern nicht aus `project.config.json` bekannt).
@@ -86,9 +87,11 @@ Naive Prompt-Injection einzelner Tokens funktioniert nicht — LLMs ignorieren s
 
    **`.launchgrade/` muss in `.gitignore`** stehen — falls fehlt, ergänzen.
 
-3. **Auswahl via AskUserQuestion einholen:**
-   - Variante A · Variante B · Variante C
-   - Plus Option: *"Kombi — ich beschreibe selbst"* (User nennt dann z.B. "Typo aus B, Palette aus C, Hero-Layout aus A")
+3. **Auswahl per `AskUserQuestion` einholen — PFLICHT, niemals als Chat-Text ausgeben und auf Antwort warten:**
+   - Question: *"Welche Style-Direktion soll DESIGN.md festschreiben?"*
+   - Options: *Variante A* · *Variante B* · *Variante C* · *Kombi (ich beschreibe selbst)*
+   - Bei "Kombi" Nachfass-Question: *"Was kombinieren?"* (User antwortet z.B. "Typo aus B, Palette aus C, Hero-Layout aus A")
+   - Wenn der UI-Picker im verwendeten Agenten (z.B. älterer Claude-Code-Build) nicht als Buttons rendert, ist das ein Client-Issue. Der Skill verwendet trotzdem `AskUserQuestion` — kein Fallback zu nummerierter Chat-Liste.
 
 4. **DESIGN.md generieren** auf Basis der gewählten Variante (oder Kombi) — mit Pflicht-Sektionen:
    - **Brand-DNA**: 3–5 Adjektive die die Brand IST + 3–5 die sie NICHT ist
