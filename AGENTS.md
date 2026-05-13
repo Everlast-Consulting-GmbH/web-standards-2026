@@ -1,29 +1,35 @@
 # AGENTS.md
 
-Constitution for any AI agent working in this project — Claude Code, Codex, or others. This file and `CLAUDE.md` are identical (symlink).
+Constitution for any AI agent working in this project — Claude Code, Codex, Cursor, or others. This file and `CLAUDE.md` are identical (symlink).
 
 The technical web baseline lives in `./web-standards/AGENTS.md` (snapshot of the Launchgrade Web Standards 2026, versioned per release). That document is intentionally in German because it references German/EU legal frameworks (BFSG, DDG, TDDDG, MStV, EU rulings).
 
-## Setup
+## What this template needs to run
 
-```bash
-nvm use && npm install
-```
+**Nothing.** The template itself is static files (`public/*`), docs (`AGENTS.md`, `web-standards/`), and Claude Code skills. There is no build step, no install step, no runtime.
 
-Global prerequisites (once):
+Runtime dependencies only appear once the user makes a downstream choice — and the agent handles them then, not upfront.
 
-- Node ≥ 20 (see `.nvmrc`)
-- `lighthouse` and `@axe-core/cli` for the audit skill: `npm i -g lighthouse @axe-core/cli`
+## Bootstrap (read this first on a fresh clone)
 
-Then trigger the `launchgrade-setup` skill in Claude Code / Codex — it asks for stack, brand, domain, BFSG relevance, **auto-scaffolds the chosen stack** (Astro/Next/SvelteKit/Nuxt, non-interactive), and replaces the `{{PLACEHOLDER}}` tokens in `public/*` and `SECURITY.md`.
+When invoked in a fresh template clone (or after the user clicks GitHub's "Use this template"), follow these steps in order:
+
+1. **Detect context.** Is this a fresh clone (no chosen stack yet)? Check for absence of `astro.config.*`, `next.config.*`, `svelte.config.*`, `nuxt.config.*`, `package.json` at root.
+2. **Do nothing eagerly.** Do not install Node, do not run `npm install`, do not install global CLIs. The user may never need them.
+3. **Trigger `/launchgrade-setup`.** That skill asks for stack, brand, domain, BFSG relevance, then scaffolds the chosen stack (if any) and fills `{{PLACEHOLDER}}` tokens in `public/*` and `SECURITY.md`.
+4. **Install on demand, not upfront.** If and when a user choice requires tooling, install it then with a clear explanation:
+   - Picks Astro / Next / SvelteKit / Nuxt → Node 20+ required for scaffold. If no Node, detect platform and recommend the simplest installer (`fnm`, `volta`, or system installer — not `nvm` as a hard requirement).
+   - Wants local Lighthouse audit → use `npx lighthouse` (no global install needed).
+   - BFSG-relevant + wants local a11y CLI → `npx @axe-core/cli`.
+   - Otherwise audit runs against the live URL via PageSpeed Insights API + Mozilla Observatory (both web-based, no install).
 
 ## Workflow (three phases, three skills)
 
 ```
-1. /launchgrade-setup    →  context capture, auto-scaffold, required files + stack-specific configs (CSP, headers, JSON-LD)
+1. /launchgrade-setup    →  context capture, optional stack scaffold, required files + stack-specific configs (CSP, headers, JSON-LD)
 2. /launchgrade-design   →  DESIGN.md, brand DNA, anti-slop, visual-diff loop (Playwright MCP)
 3. Build
-4. /launchgrade-audit    →  before every release (Lighthouse + Mozilla Observatory + PageSpeed Insights)
+4. /launchgrade-audit    →  before every release (PageSpeed Insights + Mozilla Observatory; Lighthouse CLI optional)
 ```
 
 ## When does what trigger
@@ -52,14 +58,15 @@ Not in the template (stack- or asset-specific, comes via skill or manually):
 
 ## Build / test / audit
 
+If the user picked a JS stack, the stack adds its own scripts:
+
 ```bash
-# Stack-specific, added by the chosen stack:
 npm run dev          # local dev
 npm run build        # production build
 npm test             # if tests exist
 ```
 
-Trigger the audit directly via `/launchgrade-audit <URL>` in Claude Code / Codex. No `npm run audit` — the skill is context-aware and needs no npm wiring.
+For audit, trigger `/launchgrade-audit <URL>` directly in Claude Code / Codex. No npm wiring — the skill is context-aware.
 
 ## Git workflow
 
@@ -68,7 +75,7 @@ Trigger the audit directly via `/launchgrade-audit <URL>` in Claude Code / Codex
 - **Solo repos**: direct push to `main` is fine
 - **Multi-contributor repos**: enable GitHub Branch Protection on `main` (Settings → Branches → Add rule: require PR + status checks)
 
-## Code standards
+## Code standards (when a JS stack is picked)
 
 - Prefer TypeScript strict mode
 - Early returns over deep nesting
@@ -81,13 +88,13 @@ Trigger the audit directly via `/launchgrade-audit <URL>` in Claude Code / Codex
 
 - Never commit secrets — `.env*` is gitignored
 - Before push, spot-check: `git diff --cached | grep -iE "(api[_-]?key|secret|token|password)"`
-- For BFSG-relevant projects (B2C shop, banking, booking): run `@axe-core/cli` with `--tags wcag22aa` before merge
+- For BFSG-relevant projects (B2C shop, banking, booking): run `npx @axe-core/cli` with `--tags wcag22aa` before merge
 
 ## Keeping standards current
 
 Standards updates come via the public repo (`git pull` or fresh template clone). Version marker lives in `web-standards/.snapshot-version`.
 
-The maintainer-only script `scripts/update-standards.sh` is not relevant for external users.
+The maintainer-only script `scripts/update-standards.sh` is pure bash, requires no Node, and is not relevant for external users.
 
 ## Response style (for AI agents)
 
@@ -99,6 +106,7 @@ The maintainer-only script `scripts/update-standards.sh` is not relevant for ext
 
 ## Anti-patterns
 
+- ❌ Installing Node / nvm / npm packages on first invocation "just in case" — install on demand
 - ❌ Reciting standards from memory instead of reading `./web-standards/AGENTS.md`
 - ❌ Generic `robots.txt` without AI-crawler configuration
 - ❌ CSP with `unsafe-inline` without documented justification
