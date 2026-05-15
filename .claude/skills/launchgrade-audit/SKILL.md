@@ -1,11 +1,11 @@
 ---
 name: launchgrade-audit
-description: Pre-launch and post-launch audit for web projects per Launchgrade Web Standards 2026. Runs Lighthouse, Mozilla Observatory, and PageSpeed Insights, parses JSON output, maps findings to MUSTs/SHOULDs from AGENTS.md, returns a bucket report (Blockers / Recommended / Nice-to-have). Triggers on "audit", "pre-launch", "check", "Lighthouse", "score", "how fast", URL + check verb, "Audit", "prüfen", "wie schnell".
+description: Pre-launch and post-launch audit for web projects per Launchgrade Web Standards 2026. Runs Lighthouse, Mozilla Observatory, PageSpeed Insights, plus a runtime browser smoke (CSP×script cross-check, console/violation sweep, critical CTA + tracking-init clicks). Parses JSON output, maps findings to MUSTs/SHOULDs from AGENTS.md, returns a bucket report (Blockers / Recommended / Nice-to-have). Triggers on "audit", "pre-launch", "check", "Lighthouse", "score", "how fast", URL + check verb, "Audit", "prüfen", "wie schnell".
 ---
 
 # Launchgrade Web Audit Skill
 
-Dritte Phase im Launchgrade-Workflow: **Verifikation**. Führt die drei essentiellen Tools deterministisch aus und mappt die Findings auf die Standards.
+Dritte Phase im Launchgrade-Workflow: **Verifikation**. Führt die essentiellen Tools deterministisch aus, smoke-testet die laufende Site im Browser und mappt die Findings auf die Standards.
 
 ## Wann triggern
 
@@ -31,7 +31,7 @@ Pre-Launch-Liste: `checklist.md` im selben Repo.
 
 **Pflicht-Schritt:** AGENTS.md §2–§6 + `checklist.md` lesen, bevor Findings gemappt werden.
 
-## Drei Tools, deterministisch
+## Vier Schritte, deterministisch
 
 ### 1. Lighthouse (Performance + SEO + A11y + Best Practices)
 
@@ -94,6 +94,44 @@ JSON-Pfade (CrUX = echte User-Daten, nur wenn Domain genug Traffic hat):
 - CLS ≤ 0.1 (im JSON ×100, also ≤ 10)
 
 Wenn keine CrUX-Daten vorliegen (kleiner Traffic / neue Site): nur Lab-Daten aus Lighthouse gelten als Smoke-Test, das im Report dokumentieren.
+
+### 4. Runtime-Verifikation (Browser)
+
+Headless-Scanner sehen Render-Output, aber nicht: stille CSP-Drops, Hydration-Mismatches, tote Klicks, Tracking-das-nicht-mehr-feuert. Drei Mini-Checks im realen Browser — egal welches Tool das Projekt hat (`agent-browser`, Playwright-MCP, Chrome-MCP).
+
+**4a. CSP × tatsächlich geladene 3rd-Party-Hosts**
+Pro Repo grep'pen und gegen die ausgelieferte CSP matchen:
+
+```bash
+# Externe Script-Hosts die der Code injiziert
+grep -rhoE '(<script[^>]*src=|[Ss]cript[[:space:]]+src=|createElement\("script"\)[[:space:]]*[^;]*src[[:space:]]*=)[^"'\'']*["'\''][^"'\'' ]+' src/ \
+  | grep -oE 'https?://[^"'\'' ]+' | sort -u
+# Externe iframe-Hosts
+grep -rhoE '<iframe[^>]*src=["'\''][^"'\'' ]+' src/ | grep -oE 'https?://[^"'\'' ]+' | sort -u
+# Externe fetch-/XHR-Ziele
+grep -rhoE 'fetch\(["'\'']https?://[^"'\'' ]+' src/ | grep -oE 'https?://[^"'\'' ]+' | sort -u
+# Aktuell ausgelieferte CSP (gegen URL)
+curl -sI <url> | grep -i content-security-policy
+```
+
+Jeden gefundenen Host gegen die passende CSP-Direktive matchen: Scripts → `script-src`, iframes → `frame-src`, fetch/XHR → `connect-src`, `<img>`/Pixel-Beacons → `img-src`, Videos/HLS → `media-src`, Fonts → `font-src`. Was fehlt → Blocker (silent break in prod).
+
+**4b. Live-Console- & Network-Sweep**
+Browser öffnen, Marketing-Consent setzen (sonst feuert kein Tracking), 3-5 Critical-Pages laden (Homepage, ein Kurs-/Produktdetail, Checkout, Login), Console + Network harvesten:
+
+- Console-Filter: `hydrat`, `CSP`, `Content Security Policy`, `Refused to`, `blocked`, `Failed to fetch`, `Uncaught`, `404`. Jeder Treffer → Blocker oder Concern.
+- Network-Filter: 4xx/5xx auf eigene Domain oder auf Tracking-/Embed-Hosts. Conversion-Beacons (FB `/tr`, Google Ads `/collect`, Hyros `/lst/`) müssen 200 sein wenn Consent gesetzt war.
+
+**4c. Critical-CTA Click-Smoke + Tracking-Init**
+Lighthouse drückt keine Buttons. Wenn der primäre Conversion-Pfad tot ist, ist 100/100 Performance wertlos. Pro Site einmal durchklicken:
+
+- Header-Nav-Links → erwartete URL
+- Hero-/Section-CTA(s) → erwartete URL (Checkout, Form, Demo)
+- Falls Forms: Submit mit dummy-Daten → 2xx + erwartete Bestätigungsseite
+- Falls Video-Embeds: Play-Button klicken → iframe lädt sichtbar
+- Falls Tracking: nach Consent `window.fbq`, `window.gtag`, ggf. `window._learnq` / `window.hyros` etc. existieren und Pixel-Beacons sind im Network
+
+Verifizieren via tatsächlicher URL/State-Change, nicht via Screenshot allein (Buttons können sichtbar und tot sein — z.B. Stacking-Bug mit `pointer-events`).
 
 ## Vorgehen
 
