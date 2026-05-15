@@ -129,7 +129,9 @@ Lighthouse drückt keine Buttons. Wenn der primäre Conversion-Pfad tot ist, ist
 - Hero-/Section-CTA(s) → erwartete URL (Checkout, Form, Demo)
 - Falls Forms: Submit mit dummy-Daten → 2xx + erwartete Bestätigungsseite
 - Falls Video-Embeds: Play-Button klicken → iframe lädt sichtbar
-- Falls Tracking: nach Consent `window.fbq`, `window.gtag`, ggf. `window._learnq` / `window.hyros` etc. existieren und Pixel-Beacons sind im Network
+- Falls Tracking: nach Consent **(a)** `window.fbq` / `window.gtag` / ggf. `window.hyros` / `window._learnq` existieren UND **(b)** im Network-Tab feuern die erwarteten Conversion-Beacons — FB `/tr?ev=PageView` 200, Google Ads/GA `/collect` oder `/g/collect` 200, Hyros `/lst/` 200. Existenz allein reicht nicht (Stub kann initialisiert sein ohne dass Events feuern).
+- Falls server-side Tracking (FB CAPI / Conversion API Webhooks): eine echte Test-Conversion durchspielen und im jeweiligen Events-Manager (FB Events Manager, GA DebugView, Hyros Dashboard) prüfen dass das Event ankommt — der Browser-Audit sieht das nicht.
+- Browser ohne Ad-Blocker-Extensions verwenden / Inkognito-Profil — sonst False-Positive auf `/tr` Block.
 
 Verifizieren via tatsächlicher URL/State-Change, nicht via Screenshot allein (Buttons können sichtbar und tot sein — z.B. Stacking-Bug mit `pointer-events`).
 
